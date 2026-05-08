@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Premium Car Selling Center</title>
+
+    <style>
+
+        :root {
+
+            --bg-main: #e2e5e9;
+
+            --text-dark: #1a1a1a;
+
+            --text-light: #6b7280;
+
+            --accent: #000000;
+
+            
+
+            /* Glassmorphism */
+
+            --glass-bg: rgba(255, 255, 255, 0.65);
+
+            --glass-border: rgba(255, 255, 255, 0.4);
+
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+
+            
+
+            /* Transitions */
+
+            --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+
+            --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+        }
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+            -webkit-font-smoothing: antialiased;
+
+        }
+
+        body {
+
+            background-color: var(--bg-main);
+
+            color: var(--text-dark);
+
+            min-height: 100vh;
+
+            display: flex;
+
+            flex-direction: column;
+
+            overflow-x: hidden;
+
+            background-image: 
+
+                radial-gradient(circle at 50% 0%, #ffffff 0%, transparent 70%),
+
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.8) 0%, transparent 50%);
+
+        }
+
+        /* Glass Utility */
+
+        .glass {
+
+            background: var(--glass-bg);
+
+            backdrop-filter: blur(16px);
+
+            -webkit-backdrop-filter: blur(16px);
+
+            border: 1px solid var(--glass-border);
+
+            box-shadow: var(--glass-shadow);
+
+        }
+
+        /* --- Navigation --- */
+
+        nav {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 1.5rem 4rem;
+
+            position: relative;
+
+            z-index: 100;
+
+        }
+
+        .logo {
+
+            font-size: 1.5rem;
+
+            font-weight: 800;
+
+            letter-spacing: -0.5px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+        }
+
+        .logo span {
+
+            font-weight: 400;
+
+            color: var(--text-light);
+
+            font-size: 1rem;
+
+        }
+
+        .nav-links {
+
+            display: flex;
+
+            gap: 2.5rem;
+
+            background: rgba(255,255,255,0.4);
+
+            padding: 0.5rem 1.5rem;
+
+            border-radius: 100px;
+
+            backdrop-filter: blur(10px);
+
+        }
+
+        .nav-link {
+
+            text-decoration: none;
+
+            color: var(--text-light);
+
+            font-size: 0.9rem;
+
+            font-weight: 500;
+
+            position: relative;
+
+            padding: 0.5rem 1rem;
+
+            border-radius: 100px;
+
+            transition: color 0.3s ease;
+
+            cursor: pointer;
+
+        }
+
+        .nav-link:hover {
+
+            color: var(--text-dark);
+
+        }
+
+        .nav-link.active {
+
+            color: white;
+
+            background: var(--accent);
+
+        }
+
+        .nav-actions {
+
+            display: flex;
+
+            gap: 1rem;
+
+        }
+
+        .icon-btn {
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            cursor: pointer;
+
+            transition: transform 0.3s ease, background 0.3s ease;
+
+        }
+
+        .icon-btn:hover {
+
+            transform: translateY(-2px);
+
+            background: rgba(255,255,255,0.8);
+
+        }
+
+        /* --- Main Content Area --- */
+
+        main {
+
+            flex: 1;
+
+            display: grid;
+
+            grid-template-columns: 200px 1fr 200px;
+
+            padding: 0 4rem;
+
+            position: relative;
+
+        }
+
+        /* Faint Background Logo/Text */
+
+        .bg-watermark {
+
+            position: absolute;
+
+            top: 50%;
+
+            left: 50%;
+
+            transform: translate(-50%, -50%);
+
+            font-size: 30vw;
+
+            font-weight: 900;
+
+            color: rgba(255,255,255,0.3);
+
+            z-index: 0;
+
+            pointer-events: none;
+
+            user-select: none;
+
+        }
+
+        /* Left Side Nav */
+
+        .side-nav {
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            gap: 1.5rem;
+
+            z-index: 10;
+
+        }
+
+        .side-item {
+
+            font-size: 0.85rem;
+
+            color: var(--text-light);
+
+            font-weight: 500;
+
+            cursor: pointer;
+
+            padding: 0.8rem 1.5rem;
+
+            border-radius: 100px;
+
+            width: max-content;
+
+            transition: all 0.3s ease;
+
+        }
+
+        .side-item:hover {
+
+            color: var(--text-dark);
+
+            transform: translateX(5px);
+
+        }
+
+        .side-item.active {
+
+            background: var(--accent);
+
+            color: white;
+
+        }
+
+        /* Center Showcase */
+
+        .showcase {
+
+            position: relative;
+
+            z-index: 10;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+        .car-header {
+
+            width: 100%;
+
+            margin-bottom: 2rem;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+        }
+
+        .car-title h1 {
+
+            font-size: 2.5rem;
+
+            font-weight: 800;
+
+            line-height: 1.1;
+
+        }
+
+        .car-title p {
+
+            color: var(--text-light);
+
+            font-size: 0.9rem;
+
+            margin-top: 0.5rem;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+        }
+
+        /* Floating Info Panels */
+
+        .info-panel {
+
+            padding: 1rem 1.5rem;
+
+            border-radius: 16px;
+
+            max-width: 250px;
+
+            font-size: 0.8rem;
+
+            color: var(--text-light);
+
+            line-height: 1.5;
+
+            position: absolute;
+
+            animation: float 6s ease-in-out infinite;
+
+        }
+
+        
+
+        .info-panel strong {
+
+            color: var(--text-dark);
+
+            display: block;
+
+            margin-bottom: 0.3rem;
+
+            font-size: 0.9rem;
+
+        }
+
+        .panel-top-right { top: 0; right: 0; animation-delay: 0s; }
+
+        .panel-mid-left { top: 30%; left: -50px; animation-delay: -2s; }
+
+        .panel-bottom-right { bottom: 10%; right: -20px; animation-delay: -4s; }
+
+        @keyframes float {
+
+            0% { transform: translateY(0px); }
+
+            50% { transform: translateY(-10px); }
+
+            100% { transform: translateY(0px); }
+
+        }
+
+        /* The Carousel Container */
+
+        .carousel-viewport {
+
+            width: 100%;
+
+            max-width: 900px;
+
+            position: relative;
+
+            height: 400px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            perspective: 1000px;
+
+        }
+
+        .car-image-container {
+
+            position: absolute;
+
+            width: 100%;
+
+            height: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            transition: transform 0.8s var(--ease-out-expo), opacity 0.8s var(--ease-out-expo), filter 0.8s ease;
+
+            opacity: 0;
+
+            transform: translateX(50%) scale(0.8);
+
+            pointer-events: none;
+
+        }
+
+        .car-image-container.active {
+
+            opacity: 1;
+
+            transform: translateX(0) scale(1);
+
+            pointer-events: auto;
+
+            z-index: 5;
+
+        }
+
+        .car-image-container.prev {
+
+            opacity: 0.3;
+
+            transform: translateX(-60%) scale(0.7);
+
+            z-index: 4;
+
+        }
+
+        
+
+        .car-image-container.next {
+
+            opacity: 0.3;
+
+            transform: translateX(60%) scale(0.7);
+
+            z-index: 4;
+
+        }
+
+        .car-img {
+
+            width: 100%;
+
+            max-width: 800px;
+
+            height: auto;
+
+            object-fit: contain;
+
+            /* Using a filter drop-shadow to give the cutout image depth */
+
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.3));
+
+            transition: filter 0.5s ease; /* For color picking */
+
+        }
+
+        /* Hotspots */
+
+        .hotspot {
+
+            position: absolute;
+
+            width: 24px;
+
+            height: 24px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.3);
+
+            border: 2px solid white;
+
+            cursor: pointer;
+
+            z-index: 20;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+        }
+
+        .hotspot::before {
+
+            content: '';
+
+            width: 8px;
+
+            height: 8px;
+
+            background: white;
+
+            border-radius: 50%;
+
+        }
+
+        .hotspot::after {
+
+            content: '';
+
+            position: absolute;
+
+            width: 100%;
+
+            height: 100%;
+
+            border-radius: 50%;
+
+            border: 1px solid white;
+
+            animation: pulse 2s infinite;
+
+        }
+
+        @keyframes pulse {
+
+            0% { transform: scale(1); opacity: 1; }
+
+            100% { transform: scale(2); opacity: 0; }
+
+        }
+
+        .tooltip {
+
+            position: absolute;
+
+            bottom: 150%;
+
+            left: 50%;
+
+            transform: translateX(-50%) translateY(10px);
+
+            padding: 0.5rem 1rem;
+
+            border-radius: 8px;
+
+            font-size: 0.75rem;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transition: all 0.3s var(--ease-out-expo);
+
+            pointer-events: none;
+
+        }
+
+        .hotspot:hover .tooltip {
+
+            opacity: 1;
+
+            visibility: visible;
+
+            transform: translateX(-50%) translateY(0);
+
+        }
+
+        /* Controls: Colors & Arrows */
+
+        .controls-area {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            width: 100%;
+
+            margin-top: 1rem;
+
+        }
+
+        .feature-title {
+
+            font-weight: 700;
+
+            font-size: 1.1rem;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+        }
+
+        
+
+        .feature-title span {
+
+            display: inline-block;
+
+            width: 20px;
+
+            height: 20px;
+
+            border-radius: 50%;
+
+            border: 1px solid #ccc;
+
+            text-align: center;
+
+            line-height: 18px;
+
+            font-size: 0.7rem;
+
+            color: #888;
+
+        }
+
+        .color-picker {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 1rem;
+
+        }
+
+        .color-picker span {
+
+            font-size: 0.85rem;
+
+            font-weight: 600;
+
+        }
+
+        .colors {
+
+            display: flex;
+
+            gap: 8px;
+
+        }
+
+        .color-dot {
+
+            width: 20px;
+
+            height: 20px;
+
+            border-radius: 50%;
+
+            cursor: pointer;
+
+            border: 2px solid transparent;
+
+            transition: transform 0.2s, border-color 0.2s;
+
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+
+        }
+
+        .color-dot.active {
+
+            transform: scale(1.2);
+
+            border-color: var(--text-dark);
+
+        }
+
+        .nav-arrows {
+
+            display: flex;
+
+            gap: 10px;
+
+        }
+
+        .arrow-btn {
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 50%;
+
+            border: none;
+
+            cursor: pointer;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            transition: all 0.3s ease;
+
+        }
+
+        .arrow-btn:hover {
+
+            background: white;
+
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+        }
+
+        .arrow-btn svg {
+
+            width: 18px;
+
+            height: 18px;
+
+            stroke: var(--text-dark);
+
+            stroke-width: 2;
+
+        }
+
+        /* --- Bottom Stats --- */
+
+        .stats-container {
+
+            display: grid;
+
+            grid-template-columns: repeat(5, 1fr);
+
+            gap: 1rem;
+
+            padding: 2rem 4rem;
+
+            z-index: 10;
+
+        }
+
+        .stat-card {
+
+            padding: 1.5rem;
+
+            border-radius: 20px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 1rem;
+
+            position: relative;
+
+            overflow: hidden;
+
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        }
+
+        .stat-card:hover {
+
+            transform: translateY(-5px);
+
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+
+        }
+
+        .stat-card.dark {
+
+            background: var(--text-dark);
+
+            color: white;
+
+            border: none;
+
+        }
+
+        .stat-icon {
+
+            width: 32px;
+
+            height: 32px;
+
+            border-radius: 8px;
+
+            background: rgba(0,0,0,0.05);
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+        }
+
+        
+
+        .stat-card.dark .stat-icon {
+
+            background: rgba(255,255,255,0.1);
+
+        }
+
+        .stat-icon svg {
+
+            width: 16px;
+
+            height: 16px;
+
+            fill: currentColor;
+
+        }
+
+        .stat-content {
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+        .stat-label {
+
+            font-size: 0.75rem;
+
+            color: var(--text-light);
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            margin-bottom: 0.2rem;
+
+        }
+
+        
+
+        .stat-card.dark .stat-label {
+
+            color: rgba(255,255,255,0.6);
+
+        }
+
+        .stat-value {
+
+            font-size: 1.8rem;
+
+            font-weight: 700;
+
+            display: flex;
+
+            align-items: baseline;
+
+            gap: 4px;
+
+        }
+
+        .stat-unit {
+
+            font-size: 0.9rem;
+
+            font-weight: 500;
+
+            color: var(--text-light);
+
+        }
+
+        .stat-desc {
+
+            font-size: 0.8rem;
+
+            color: var(--text-light);
+
+            margin-top: auto;
+
+        }
+
+        /* Image overlay for passenger stat */
+
+        .stat-img-bg {
+
+            position: absolute;
+
+            top: 0;
+
+            right: 0;
+
+            width: 60%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            opacity: 0.8;
+
+            mask-image: linear-gradient(to right, transparent, black);
+
+            -webkit-mask-image: linear-gradient(to right, transparent, black);
+
+            z-index: 0;
+
+        }
+
+        .stat-card > *:not(.stat-img-bg) {
+
+            position: relative;
+
+            z-index: 1;
+
+        }
+
+        /* --- Footer --- */
+
+        footer {
+
+            padding: 1rem 4rem 2rem;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            border-top: 1px solid rgba(0,0,0,0.05);
+
+        }
+
+        .social-links {
+
+            display: flex;
+
+            gap: 1.5rem;
+
+        }
+
+        .social-link {
+
+            color: var(--text-light);
+
+            transition: all 0.3s ease;
+
+        }
+
+        .social-link:hover {
+
+            color: var(--text-dark);
+
+            filter: drop-shadow(0 0 8px rgba(0,0,0,0.2));
+
+            transform: scale(1.1);
+
+        }
+
+        .footer-text {
+
+            font-size: 0.8rem;
+
+            color: var(--text-light);
+
+        }
+
+        /* --- Responsive Design --- */
+
+        @media (max-width: 1200px) {
+
+            main { grid-template-columns: 150px 1fr 150px; padding: 0 2rem; }
+
+            .stats-container { grid-template-columns: repeat(3, 1fr); padding: 2rem; }
+
+            .car-title h1 { font-size: 2rem; }
+
+        }
+
+        @media (max-width: 900px) {
+
+            nav { padding: 1rem 2rem; }
+
+            .nav-links { display: none; } /* Hide mid nav on small screens */
+
+            main { grid-template-columns: 1fr; }
+
+            .side-nav { display: none; }
+
+            .info-panel { display: none; } /* Hide floating panels to save space */
+
+            .stats-container { grid-template-columns: repeat(2, 1fr); }
+
+            .car-header { flex-direction: column; align-items: center; text-align: center; }
+
+            .controls-area { flex-direction: column; gap: 1rem; }
+
+            .bg-watermark { font-size: 50vw; top: 30%; }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .stats-container { grid-template-columns: 1fr; padding: 1rem; }
+
+            .carousel-viewport { height: 250px; }
+
+            footer { flex-direction: column; gap: 1rem; }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <nav>
+
+        <div class="logo">
+
+            Car. <span>Selling<br>Center</span>
+
+        </div>
+
+        <div class="nav-links">
+
+            <a href="#" class="nav-link active">Models</a>
+
+            <a href="#" class="nav-link">Services</a>
+
+            <a href="#" class="nav-link">Experience</a>
+
+            <a href="#" class="nav-link">Shop</a>
+
+            <a href="#" class="nav-link">Purchase</a>
+
+            <a href="#" class="nav-link">Configure</a>
+
+        </div>
+
+        <div class="nav-actions">
+
+            <div class="icon-btn glass">
+
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+
+            </div>
+
+            <div class="icon-btn glass">
+
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <main>
+
+        <div class="bg-watermark">AMG</div>
+
+        
+
+        <div class="side-nav">
+
+            <div class="side-item">Performance</div>
+
+            <div class="side-item active">Design</div>
+
+            <div class="side-item">Safety</div>
+
+            <div class="side-item">Luxury</div>
+
+            <div class="side-item">Multimedia</div>
+
+        </div>
+
+        <div class="showcase">
+
+            <div class="car-header">
+
+                <div class="car-title">
+
+                    <h1 id="car-make">Mercedes-Benz</h1>
+
+                    <p id="car-model">AMG C 63 S Coupe - 2023</p>
+
+                </div>
+
+                
+
+                <div class="info-panel glass panel-top-right">
+
+                    <strong>A variety of warranty options</strong>
+
+                    are available for your new or Certified Pre-Owned (CPO) Mercedes-Benz.
+
+                </div>
+
+            </div>
+
+            <div class="carousel-viewport" id="carousel">
+
+                <!-- Cars will be injected here via JS -->
+
+            </div>
+
+            <div class="controls-area">
+
+                <div class="feature-title">
+
+                    Feature Highlights <span>i</span>
+
+                </div>
+
+                
+
+                <div class="color-picker">
+
+                    <span>Colors</span>
+
+                    <div class="colors" id="color-container">
+
+                        <div class="color-dot active" style="background: #d4af37;" data-hue="0"></div>
+
+                        <div class="color-dot" style="background: #e0e0e0;" data-hue="-120"></div>
+
+                        <div class="color-dot" style="background: #1a1a1a;" data-hue="180"></div>
+
+                        <div class="color-dot" style="background: #0055ff;" data-hue="220"></div>
+
+                        <div class="color-dot" style="background: #ff3300;" data-hue="320"></div>
+
+                    </div>
+
+                </div>
+
+                <div class="nav-arrows">
+
+                    <button class="arrow-btn glass" id="prev-btn">
+
+                        <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+                    </button>
+
+                    <button class="arrow-btn glass" id="next-btn">
+
+                        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        
+
+        <div style="position: relative;">
+
+             <div class="info-panel glass panel-mid-left" style="width: 200px;">
+
+                <strong>Unsurpassed Power</strong>
+
+                A handcrafted 503-hp biturbo V8 unleashes a thrill-fill torrent of torque. Aggressive style envelopes advanced technologies.
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <div class="stats-container">
+
+        <div class="stat-card glass">
+
+            <!-- Mock image for interior passenger view -->
+
+            <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=400&q=80" class="stat-img-bg" alt="interior">
+
+            <div class="stat-icon">
+
+                <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">Passenger capacity</span>
+
+                <div class="stat-value">
+
+                    <span class="counter" data-target="4">0</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="stat-card glass">
+
+            <div class="stat-icon">
+
+                <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">Engine</span>
+
+                <span class="stat-desc" style="font-size:1rem; font-weight:600; color:var(--text-dark); margin-top:0;">Handcrafted<br>AMG 4.0L V8 biturbo</span>
+
+            </div>
+
+        </div>
+
+        <div class="stat-card glass">
+
+            <div class="stat-icon">
+
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+
+            </div>
+
+            <div class="stat-content">
+
+                <div class="stat-value" style="margin-top:auto;">
+
+                    <span class="counter" data-target="503">0</span>
+
+                    <span class="stat-unit">hp</span>
+
+                </div>
+
+                <span class="stat-label">Power @5,500-6,250 rpm</span>
+
+            </div>
+
+        </div>
+
+        <div class="stat-card dark">
+
+             <div class="stat-icon">
+
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+
+            </div>
+
+            <div class="stat-content">
+
+                <span class="stat-label">Automatic transmission</span>
+
+                <span class="stat-desc" style="font-size:1rem; font-weight:600; margin-top:0;">AMG<br>SPEEDSHIFT MCT 9-speed</span>
+
+            </div>
+
+        </div>
+
+        <div class="stat-card glass">
+
+            <div class="stat-icon">
+
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+
+            </div>
+
+            <div class="stat-content">
+
+                <div class="stat-value" style="margin-top:auto;">
+
+                    <span class="counter float-counter" data-target="3.7">0.0</span>
+
+                    <span class="stat-unit">sec</span>
+
+                </div>
+
+                <span class="stat-label">Acceleration 0-60 mph</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+
+        <div class="footer-text">© 2026 Car Selling Center. All rights reserved.</div>
+
+        <div class="social-links">
+
+            <a href="#" class="social-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+
+            <a href="#" class="social-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+
+            <a href="#" class="social-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+
+            <a href="#" class="social-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
+
+        </div>
+
+    </footer>
+
+    <script>
+
+        // --- Data ---
+
+        // Using a highly stylized, transparent-looking car image for demonstration.
+
+        // In a real app, this would be an array of actual transparent PNGs.
+
+        const baseImageUrl = "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?auto=format&fit=crop&w=1200&q=80&ixlib=rb-4.0.3"; // Clean profile view
+
+        
+
+        const carsData = [
+
+            {
+
+                make: "Mercedes-Benz",
+
+                model: "AMG C 63 S Coupe - 2023",
+
+                hp: 503,
+
+                accel: 3.7,
+
+                hue: 0, // Base color (simulated Gold/Bronze)
+
+                image: baseImageUrl,
+
+                hotspots: [
+
+                    { top: "45%", left: "30%", text: "AMG Night Package" },
+
+                    { top: "50%", left: "55%", text: "AMG Body Styling" },
+
+                    { top: "35%", left: "65%", text: "Panorama Roof" },
+
+                    { top: "60%", left: "80%", text: "Pure Performance Wheels" }
+
+                ]
+
+            },
+
+            {
+
+                make: "Porsche",
+
+                model: "911 Carrera S - 2024",
+
+                hp: 443,
+
+                accel: 3.5,
+
+                hue: -120, // Simulated Silver/Grey via filter
+
+                image: baseImageUrl,
+
+                hotspots: [
+
+                    { top: "50%", left: "25%", text: "Ceramic Composite Brakes" },
+
+                    { top: "40%", left: "60%", text: "Sport Chrono Package" }
+
+                ]
+
+            },
+
+            {
+
+                make: "Audi",
+
+                model: "RS e-tron GT - 2023",
+
+                hp: 637,
+
+                accel: 3.1,
+
+                hue: 180, // Simulated Black/Dark Blue
+
+                image: baseImageUrl,
+
+                hotspots: [
+
+                    { top: "55%", left: "40%", text: "Electric Quattro" },
+
+                    { top: "35%", left: "50%", text: "Carbon Fiber Roof" },
+
+                    { top: "60%", left: "75%", text: "Aero Wheels" }
+
+                ]
+
+            },
+
+            {
+
+                make: "BMW",
+
+                model: "M8 Competition - 2024",
+
+                hp: 617,
+
+                accel: 3.0,
+
+                hue: 220, // Simulated Blue
+
+                image: baseImageUrl,
+
+                hotspots: [
+
+                    { top: "48%", left: "35%", text: "M Carbon Exterior" },
+
+                    { top: "55%", left: "70%", text: "M Sport Exhaust" }
+
+                ]
+
+            }
+
+        ];
+
+        let currentIndex = 0;
+
+        const carousel = document.getElementById('carousel');
+
+        const makeEl = document.getElementById('car-make');
+
+        const modelEl = document.getElementById('car-model');
+
+        const colorDots = document.querySelectorAll('.color-dot');
+
+        const watermark = document.querySelector('.bg-watermark');
+
+        // --- Initialization ---
+
+        function initCarousel() {
+
+            carousel.innerHTML = '';
+
+            carsData.forEach((car, index) => {
+
+                const container = document.createElement('div');
+
+                container.className = `car-image-container ${index === 0 ? 'active' : index === 1 ? 'next' : 'prev'}`;
+
+                
+
+                // Masking trick: apply a radial gradient mask to blend the un-transparent Unsplash background into the page background.
+
+                // In production with real transparent PNGs, remove the mask-image property.
+
+                const img = document.createElement('img');
+
+                img.src = car.image;
+
+                img.className = 'car-img';
+
+                img.style.filter = `hue-rotate(${car.hue}deg) saturate(1.5) contrast(1.1)`;
+
+                img.style.maskImage = `radial-gradient(ellipse at center, black 40%, transparent 70%)`;
+
+                img.style.webkitMaskImage = `radial-gradient(ellipse at center, black 40%, transparent 70%)`;
+
+                
+
+                container.appendChild(img);
+
+                // Add hotspots
+
+                car.hotspots.forEach(spot => {
+
+                    const hp = document.createElement('div');
+
+                    hp.className = 'hotspot glass';
+
+                    hp.style.top = spot.top;
+
+                    hp.style.left = spot.left;
+
+                    
+
+                    const tooltip = document.createElement('div');
+
+                    tooltip.className = 'tooltip glass';
+
+                    tooltip.innerText = spot.text;
+
+                    
+
+                    hp.appendChild(tooltip);
+
+                    container.appendChild(hp);
+
+                });
+
+                carousel.appendChild(container);
+
+            });
+
+            updateUI(0);
+
+            animateCounters();
+
+        }
+
+        // --- Update Logic ---
+
+        function updateUI(index) {
+
+            const containers = document.querySelectorAll('.car-image-container');
+
+            const total = containers.length;
+
+            containers.forEach((el, i) => {
+
+                el.className = 'car-image-container'; // reset
+
+                if (i === index) {
+
+                    el.classList.add('active');
+
+                } else if (i === (index + 1) % total) {
+
+                    el.classList.add('next');
+
+                } else {
+
+                    // For visually treating all others as 'prev' off-screen left
+
+                    el.classList.add('prev');
+
+                }
+
+            });
+
+            // Update Text
+
+            const car = carsData[index];
+
+            makeEl.innerText = car.make;
+
+            modelEl.innerText = car.model;
+
+            watermark.innerText = car.make.split('-')[0].substring(0,3).toUpperCase(); // Short watermark
+
+            // Update Stats targets
+
+            document.querySelectorAll('.counter').forEach(el => {
+
+                if(el.dataset.target == "503") el.dataset.target = car.hp;
+
+                if(el.dataset.target == "3.7") el.dataset.target = car.accel;
+
+            });
+
+            // Reset and trigger counters
+
+            animateCounters();
+
+        }
+
+        // --- Navigation Handlers ---
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+
+            currentIndex = (currentIndex + 1) % carsData.length;
+
+            updateUI(currentIndex);
+
+        });
+
+        document.getElementById('prev-btn').addEventListener('click', () => {
+
+            currentIndex = (currentIndex - 1 + carsData.length) % carsData.length;
+
+            updateUI(currentIndex);
+
+        });
+
+        // --- Color Picker Logic (Simulated with Hue-Rotate) ---
+
+        colorDots.forEach(dot => {
+
+            dot.addEventListener('click', (e) => {
+
+                // Update active dot
+
+                colorDots.forEach(d => d.classList.remove('active'));
+
+                e.target.classList.add('active');
+
+                // Apply hue rotation to current active image
+
+                const hue = e.target.getAttribute('data-hue');
+
+                const activeImg = document.querySelector('.car-image-container.active .car-img');
+
+                if(activeImg) {
+
+                    activeImg.style.filter = `hue-rotate(${hue}deg) saturate(1.5) contrast(1.1)`;
+
+                }
+
+            });
+
+        });
+
+        // --- Number Animation ---
+
+        function animateCounters() {
+
+            const counters = document.querySelectorAll('.counter');
+
+            counters.forEach(counter => {
+
+                counter.innerText = '0'; // reset
+
+                const target = +counter.getAttribute('data-target');
+
+                const duration = 1500; // ms
+
+                const isFloat = counter.classList.contains('float-counter');
+
+                let startTime = null;
+
+                const step = (currentTime) => {
+
+                    if (!startTime) startTime = currentTime;
+
+                    const progress = Math.min((currentTime - startTime) / duration, 1);
+
+                    
+
+                    // easeOutExpo
+
+                    const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+
+                    
+
+                    let currentVal = ease * target;
+
+                    
+
+                    if (isFloat) {
+
+                        counter.innerText = currentVal.toFixed(1);
+
+                    } else {
+
+                        counter.innerText = Math.floor(currentVal);
+
+                    }
+
+                    if (progress < 1) {
+
+                        window.requestAnimationFrame(step);
+
+                    } else {
+
+                        counter.innerText = isFloat ? target.toFixed(1) : target;
+
+                    }
+
+                };
+
+                window.requestAnimationFrame(step);
+
+            });
+
+        }
+
+        // Boot
+
+        initCarousel();
+
+    </script>
+
+</body>
+
+</html>
+
